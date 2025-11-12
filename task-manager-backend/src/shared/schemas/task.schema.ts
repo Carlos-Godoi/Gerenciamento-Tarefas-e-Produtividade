@@ -27,5 +27,5 @@ export const updateTaskSchema = z.object({
 });
 
 // Tipagens para o Controller
-export type createTaskSchema = z.infer<typeof createTaskSchema>;
-export type updateTaskSchema = z.infer<typeof updateTaskSchema>;
+export type CreateTaskBody = z.infer<typeof createTaskSchema>;
+export type UpdateTaskBody = z.infer<typeof updateTaskSchema>;

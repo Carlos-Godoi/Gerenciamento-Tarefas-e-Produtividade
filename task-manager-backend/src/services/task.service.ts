@@ -1,15 +1,15 @@
- import { FilterQuery, Types } from 'mongoose';
- import Task, { ITask, TaskPriority, TaskStatus } from '../models/task.models';
- import { CreateTaskBody, UpdateTaskBody  } from '../shared/schemas/task.schema';
+import { FilterQuery, Types } from 'mongoose';
+import Task, { ITask, TaskPriority, TaskStatus } from '../models/task.models';
+import { CreateTaskBody, UpdateTaskBody } from '../shared/schemas/task.schema';
 
- interface ITaskFilter {
+export interface ITaskFilter {
     status?: TaskStatus;
     priority?: TaskPriority;
     title?: string;
     // Mais filtros avançados podem ser adicionados aqui
- }
+}
 
- class TaskService {
+class TaskService {
 
     // 1. CRIAÇÃO
     async create(userId: string, taskData: CreateTaskBody): Promise<ITask> {
@@ -22,8 +22,8 @@
     }
 
     // 2. LISTAGEM E FILTROS (Avançado)
-    async getAll(userId: string, filters:ITaskFilter): Promise<ITask[]> {
-        
+    async getAll(userId: string, filters: ITaskFilter): Promise<ITask[]> {
+
         // Cria a query do MongoDB dinamicamente
         const query: FilterQuery<ITask> = { userId: new Types.ObjectId(userId) }; // Filtro de Propriedade (Obrigatório)
 
@@ -65,7 +65,7 @@
         const updatedTask = await Task.findOneAndUpdate(
             { _id: taskId, userId: new Types.ObjectId(userId) }, // Busca com filtro de propriedade
             { $set: taskData }, // Usa $set para atualizar apena os campos fornecidos
-            { new: true } 
+            { new: true }
         );
 
         if (!updatedTask) {
@@ -81,7 +81,7 @@
         // Deleta o _id E o userId para garantir propriedade
         const deleteTask = await Task.findByIdAndDelete({
             _id: taskId,
-            userId: new Types.ObjectId(userId),  
+            userId: new Types.ObjectId(userId),
         });
 
         if (!deleteTask) {
@@ -90,6 +90,6 @@
 
         return deleteTask;
     }
- }
+}
 
- export default new TaskService();
+export default new TaskService();
