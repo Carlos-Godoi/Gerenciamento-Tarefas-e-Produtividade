@@ -1,6 +1,7 @@
 import { FilterQuery, Types } from 'mongoose';
 import Task, { ITask, TaskPriority, TaskStatus } from '../models/task.models';
 import { CreateTaskBody, UpdateTaskBody } from '../shared/schemas/task.schema';
+import { NotFoundError } from '../shared/errors/AppError';
 
 export interface ITaskFilter {
     status?: TaskStatus;
@@ -54,7 +55,7 @@ class TaskService {
         });
 
         if (!task) {
-            throw new Error('Tarefa não encontrada ou acesso não autorizado.'); // 404/401
+            throw new NotFoundError('Tarefa não encontrada ou acesso não autorizado.'); // 404
         }
 
         return task;

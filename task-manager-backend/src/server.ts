@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import taskRoutes from './routes/task.routes';
+import { errorMiddleware } from './shared/middlewares/error.middleware';
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ app.use(express.json()); // Habilita o parsing do JSON no body da requisição
 // Rotas
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+
+app.use(errorMiddleware);
 
 // Conexão com o MongoDB
 mongoose.connect(MONGODB_URI)

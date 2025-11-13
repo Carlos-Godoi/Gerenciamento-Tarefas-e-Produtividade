@@ -2,6 +2,7 @@ import User, { IUser } from '../models/user.model';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
+import { UnauthorizedError } from '../shared/errors/AppError';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -30,14 +31,14 @@ class AuthService {
         const user = await User.findOne({ email }) as (IUser & { _id: string | Types.ObjectId }) | null;
 
         if (!user) {
-            throw new Error('Credenciais inválidas.');
+            throw new UnauthorizedError('Credenciais inválidas.'); // <-- Lança o erro 401
         }
 
         // Comparação do Hash: Verifica se a senha fornecida corresponde ao hash
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!isMatch) {
-            throw new Error('Credenciais inválidas.');
+            throw new UnauthorizedError('Credenciais inválidas.'); // <-- Lança o erro 401
         }
 
         // Geração do JWT: Cria o token que será enviado ao cliente
