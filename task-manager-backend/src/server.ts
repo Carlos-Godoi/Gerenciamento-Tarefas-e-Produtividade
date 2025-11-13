@@ -1,7 +1,8 @@
 import express, { type Application } from 'express';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-// import authRoutes from './routes/auth.routes';
+import authRoutes from './routes/auth.routes';
+import taskRoutes from './routes/task.routes';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json()); // Habilita o parsing do JSON no body da requisição
 
 // Rotas
 app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
 
 // Conexão com o MongoDB
 mongoose.connect(MONGODB_URI)
