@@ -1,10 +1,12 @@
 import request from 'supertest';
-import app, { setupTestDB } from '../src/shared/test.utils';
+import app, { clearDatabase, connectTestDB } from '../src/shared/test.utils';
 import { AuthBody as mockAuth} from '../src/shared/schemas/auth.schema';
 
 
-// Inicializa a conexão e garante a limpeza do BD antes de cada teste
-setupTestDB();
+// Conecta ao BD antes de todos os testes
+beforeAll(async () => {
+    await connectTestDB();
+});
 
 // Dados de Mock para teste (Arquivo criado separadamente)
 const mockAuth = {
@@ -14,6 +16,10 @@ const mockAuth = {
 
 describe('MÓDULO DE AUTENTICAÇÃO (JWT)', () => {
 
+    beforeEach(async () => {
+        await clearDatabase(); // Chama apenas a lógica de limpeza
+    });
+    
     it('1. Deve registrar um novo usuário com sucesso (POST /api/auth/register)', async () => {
         const res = await request(app)
             .post('/api/auth/register')
