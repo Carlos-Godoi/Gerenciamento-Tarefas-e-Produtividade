@@ -5,7 +5,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 // Páginas
 import Login from './pages/Login';
 import Register from './pages/Register';
-import TaskList from './pages/TaskList'; // Será criado na próxima etapa
+import TaskList from '../src/pages/TaskList'; // Será criado na próxima etapa
 
 // 💡 Componente de Rota Protegida (Técnica Avançada)
 const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {

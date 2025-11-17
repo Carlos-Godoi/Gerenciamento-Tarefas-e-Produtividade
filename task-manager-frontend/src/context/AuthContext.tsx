@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect, ReactNode} from 'react';
+import React, { useState, createContext, useContext, useEffect, ReactNode } from 'react';
 import { LoginResponse, UserState } from '../types';
 
 // 1. Definição do Context (Estado inicial e funções)
@@ -11,8 +11,8 @@ const initialContext: AuthContextType = {
     token: null,
     userId: null,
     isLoggedIn: false,
-    login: () => {},
-    logout: () => {},
+    login: () => { },
+    logout: () => { },
 };
 
 const AuthContext = createContext<AuthContextType>(initialContext);
@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const login = (data: LoginResponse) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId);
+        // Garante que o estado seja atualizado imediatamente
         setUserState({ token: data.token, userId: data.userId, isLoggedIn: true });
     };
 

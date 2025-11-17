@@ -3,7 +3,7 @@ import { useTaskApi } from '../hooks/useTaskApi';
 import { useAuth } from '../context/AuthContext';
 import { Task, TaskStatus } from '../types';
 import TaskFormModal from '../components/TaskFormModal'; // Componente de formulário
-import { AppError } from '../shared/errors/AppError'
+
 
 const TaskList: React.FC = () => {
   const { logout } = useAuth();
@@ -25,6 +25,11 @@ const TaskList: React.FC = () => {
       // Exemplo de filtro (pode ser expandido com estado de filtro)
       const fetchedTasks = await getTasks({}); 
       setTasks(fetchedTasks);
+
+      console.log('Tarefas recebidas:', fetchedTasks);
+
+      
+
     } catch (e) {
       setError('Falha ao carregar tarefas. Você pode estar deslogado.');
     } finally {

@@ -27,7 +27,7 @@ export const useAuthApi = () => {
 
     const login = async (data: AuthForm): Promise<LoginResponse> => {
         try {
-            const response = await axios.post<LoginResponse>(`${API_URL}/suth/login`, data);
+            const response = await axios.post<LoginResponse>(`${API_URL}/auth/login`, data);
             return response.data;
         } catch (error) {
             throw handleError(error);
